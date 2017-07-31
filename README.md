@@ -73,3 +73,9 @@ On Windows use the Microsoft Visual C++ Build Tools on the command line by runni
 #!basic
 > cl /I .. ../main.c rs232-win.c /link /out:flash.exe
 ```
+
+### License ###
+
+Copyright 2017 [Open Acoustic Devices](http://www.openacousticdevices.info/).
+
+[MIT license](http://www.openacousticdevices.info/license).
