@@ -1,6 +1,6 @@
 # Flash #
 
-This is a command line tool for accessing flashing EFM32 devices using the USB bootloader. 
+This is a command line tool for flashing EFM32 devices using the USB bootloader. 
 
 ### How to use it ###
 
