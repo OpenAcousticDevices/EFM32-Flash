@@ -1,73 +1,83 @@
 # Flash #
 
-This is a command line tool for flashing EFM32 devices using the USB bootloader. 
+This is a command line tool for accessing flashing EFM32 devices using the factory supplied USB bootloader. 
 
-### How to use it ###
+## How to use it ##
 
 To list the available ports use:
 
 ```
+#!basic
 > ./flash 
 /dev/tty.usbmodem1421
 ```
 
-The response is 'NULL' if no ports are found, and 'ERROR: message' if something goes wrong.
-
 To access the serial number of the connected device:
 
 ```
+#!basic
 > ./flash -i /dev/tty.usbmodem1421
 Serial Number: 24410E05588EF20C
 ```
+
 To check the CRC of the current flash. 
 
 ```
+#!basic
 > ./flash -c /dev/tty.usbmodem1421
 Flash CRC: 40AA
 ```
 
-To write a binary file to the device. 
+To upload a binary file to the device. 
 
 ```
-> ./flash /dev/tty.usbmodem1421 AudioMoth.bin
-Programmed: 42304 bytes
-Flash CRC: 40AA
+#!basic
+> ./flash -u /dev/tty.usbmodem1421 AudioMoth1.0.0.bin
+Programmed: 41412 bytes
+Flash CRC: 4393
 ```
 
-The default is a non-destructive write. The '-d' option will overwrite the bootloader. Note that the default CRC is that of the application only. When a destructive write is performed the reported CRC is that of the entire flash.
+This is a non-destructive write which leaves the bootloader in place. The '-d' option will overwrite the bootloader. You should only use this option if you know what you are doing as you will need to use a JTAG programmer to recover the device if anything goes wrong. 
+
+Note that the default CRC is that of the application only. When a destructive write is performed the reported CRC is that of the entire flash.
 
 From Node.js or Python the command line tool can be called as a child process.
 
+### macOS ###
+
+macOS should already include the necessary USB CDC serial port driver.
+
+### Windows ###
+
+Windows 10 will automatically install the necessary USB CDC serial port driver. On Windows 7 you will need to manually install the driver using EFM32-Cdc.inf file included in this repository. 
+
 ### Linux ###
 
-The executable will work as is on macOS and Windows. However, Linux prevents USB HID devices from being writable by default. This can be fixed by adding an additional rule in /lib/udev/rules.d/. For AudioMoth, the following additional rule file, called 99-audiomoth.rules, is used. The content of which is:
+Most Linux distributions should already include the necessary USB CDC serial port driver. You might also need to change the permissions of the port before you can access it.
 
 ```
-SUBSYSTEM=="usb", ATTRS{idVendor}=="10C4", ATTRS{idProduct}=="0003", MODE="0666"
-```
-
-You might also need to change the permissions of the port.
-
-```
+#!basic
 > sudo chmod 666 /dev/ttyACM0
 ```
 
-### Building ###
+## Building ##
 
 On macOS use the Xcode project to build the binary. After archiving, the resulting executable must be manually moved to the correct folder.
 
 On Linux use gcc to build the binary by running build.sh. This will copy the executable to the correct folder. Or compile manually. 
+
 ```
+#!basic
 > gcc -Wall -std=c99 -I../.. -o flash ../../main.c ../rs232.c
 ```
 
 On Windows use the Microsoft Visual C++ Build Tools on the command line by running build.bat. This will copy the executable to the correct folder. Or compile manually. 
+
 ```
+#!basic
 > cl /I .. ../main.c rs232-win.c /link /out:flash.exe
 ```
 
-### License ###
+## More Information ##
 
-Copyright 2017 [Open Acoustic Devices](http://www.openacousticdevices.info/).
-
-[MIT license](http://www.openacousticdevices.info/license).
+The Silicon Labs USB bootloader is described in an Application Note [here](https://www.silabs.com/documents/public/application-notes/an0042-efm32-usb-uart-bootloader.pdf).

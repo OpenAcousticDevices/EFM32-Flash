@@ -37,6 +37,8 @@ struct xmodem_chunk {
 
 /* Communication constants */
 
+#define MAXIMUM_NUMBER_OF_FLUSH_CYCLES       100
+
 #define MAXIMUM_NUMBER_OF_RECEIVE_CYCLES     50
 #define MAXIMUM_NUMBER_OF_PACKET_REPEATS     10
 
@@ -95,13 +97,13 @@ static uint16_t swap16(uint16_t in) {
 
 #define MIN(a, b)       ((a) < (b) ? (a) : (b))
 
-#define PRINT_ERROR_AND_RETURN(message) { \
-    printf("ERROR: %s\n", message); \
+#define PRINT_AND_RETURN(message) { \
+    printf("%s\n", message); \
     return 0; \
 }
 
-#define PRINT_NULL_AND_RETURN() { \
-    printf("NULL\n"); \
+#define PRINT_ERROR_AND_RETURN(message) { \
+    printf("ERROR: %s\n", message); \
     return 0; \
 }
 
@@ -109,6 +111,15 @@ static uint16_t swap16(uint16_t in) {
     int bytesSent = comWrite(index, data, length); \
     if (bytesSent != length) { \
         printf("ERROR: %s\n", message); \
+        return 0; \
+    } \
+}
+
+#define WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, data, length, message) { \
+    int bytesSent = comWrite(index, data, length); \
+    if (bytesSent != length) { \
+        printf("ERROR: %s\n", message); \
+        comClose(index); \
         return 0; \
     } \
 }
@@ -187,31 +198,7 @@ void readResponse(int index, char *response, size_t length) {
 
 /* Send file using XMODEM protocol */
 
-int sendXMODEM(int index, const char *filename) {
-
-    /* Open the file */
-
-    FILE *file = fopen(filename, "rb");
-
-    if (file == 0) PRINT_ERROR_AND_RETURN("Could not open file")
-
-    /* Read contents into buffer */
-
-    fseek(file, 0, SEEK_END);
-
-    int fileSize = (int)ftell(file);
-    
-    if (fileSize == 0) PRINT_ERROR_AND_RETURN("File has zero size")
-
-    char *buffer = malloc(fileSize);
-
-    if (buffer == 0) PRINT_ERROR_AND_RETURN("Could not read file size")
-
-    fseek(file, 0, SEEK_SET);
-
-    fread(buffer, fileSize, 1, file);
-
-    fclose(file);
+int sendXMODEM(int index, char *fileData, int fileSize) {
 
     /* Wait for receiver ping */
 
@@ -237,14 +224,14 @@ int sendXMODEM(int index, const char *filename) {
 
         size_t z = MIN(bytesToSend, sizeof(chunk.payload));
 
-        memcpy(chunk.payload, buffer, z);
+        memcpy(chunk.payload, fileData, z);
 
         memset(chunk.payload + z, 0xFF, sizeof(chunk.payload) - z);
 
         chunk.crc = swap16(crc16(chunk.payload, sizeof(chunk.payload)));
 
         chunk.block_neg = 0xFF - chunk.block;
-
+        
         WRITE_WITH_RETURN_ON_ERROR(index, (char*)&chunk, sizeof(chunk), "Could not send chunk")
 
         /* Wait for response */
@@ -263,7 +250,7 @@ int sendXMODEM(int index, const char *filename) {
 
             bytesToSend -= z;
 
-            buffer += z;
+            fileData += z;
 
         } else {
 
@@ -293,9 +280,10 @@ int sendXMODEM(int index, const char *filename) {
 
 }
 
-/* Code enter point */
+/* Code entry point */
 
 char flashCRC[FLASH_CRC_LENGTH + 1];
+
 char serialNumber[SERIAL_NUMBER_LENGTH + 1];
 
 typedef enum {LIST_PORTS, READ_SERIAL_NUMBER, READ_FLASH_CRC, NONDESTRUCTIVE_WRITE, DESTRUCTIVE_WRITE} flashmode_t;
@@ -313,29 +301,25 @@ int main(int argc, char **argv) {
 
         mode = LIST_PORTS;
 
-    } else if (argc == 3) {
+    } else if (argc == 3 && strcmp(argv[1], "-i") == 0) {
 
-        if (strcmp(argv[1], "-i") == 0) {
+        mode = READ_SERIAL_NUMBER;
 
-            mode = READ_SERIAL_NUMBER;
+        port = argv[2];
 
-            port = argv[2];
-
-        } else if (strcmp(argv[1], "-c") == 0) {
+    } else if (argc == 3 && strcmp(argv[1], "-c") == 0) {
             
-            mode = READ_FLASH_CRC;
+        mode = READ_FLASH_CRC;
             
-            port = argv[2];
+        port = argv[2];
             
-        } else {
+    } else if (argc == 4 && strcmp(argv[1], "-u") == 0) {
 
-            mode = NONDESTRUCTIVE_WRITE;
+        mode = NONDESTRUCTIVE_WRITE;
 
-            port = argv[1];
+        port = argv[2];
 
-            file = argv[2];
-
-        }
+        file = argv[3];
 
     } else if (argc == 4 && strcmp(argv[1], "-d") == 0) {
 
@@ -347,7 +331,7 @@ int main(int argc, char **argv) {
 
     } else {
 
-        PRINT_ERROR_AND_RETURN("Incorrect number of arguments")
+        PRINT_ERROR_AND_RETURN("Incorrect arguments.\nflash               // List serial ports\nflash -i port       // Show AudioMoth serial number\nflash -c port       // Show current firmware CRC value\nflash -u port file  // Upload new firmware")
 
     }
 
@@ -364,9 +348,9 @@ int main(int argc, char **argv) {
         for (int i = 0; i < numberOfPorts; i += 1) {
 
             #ifdef _WIN32
-                 if (strstr(comGetPortName(i), "COM") != NULL) {
+                if (strstr(comGetPortName(i), "COM") != NULL) {
             #else
-                 if (strstr(comGetInternalName(i), "usb") != NULL || strstr(comGetInternalName(i), "ACM") != NULL) {
+                if (strstr(comGetInternalName(i), "usb") != NULL || strstr(comGetInternalName(i), "ACM") != NULL) {
             #endif
 
                 if (count > 0) {
@@ -385,7 +369,7 @@ int main(int argc, char **argv) {
 
         }
 
-        if (count == 0) PRINT_NULL_AND_RETURN()
+        if (count == 0) PRINT_AND_RETURN("No serial ports found")
 
         printf("\n");
 
@@ -397,7 +381,7 @@ int main(int argc, char **argv) {
 
     #ifdef _WIN32
 
-	int index = comFindPort(port);
+	    int index = comFindPort(port);
 
         if (index == -1) PRINT_ERROR_AND_RETURN("Could not find port")
 
@@ -415,17 +399,61 @@ int main(int argc, char **argv) {
             
     #endif
 
+    /* Read the file */
+
+    int fileSize = 0;
+
+    char *fileData = NULL;
+
+    if (mode == NONDESTRUCTIVE_WRITE || mode == DESTRUCTIVE_WRITE) {
+
+        FILE *fileHandle = fopen(file, "rb");
+
+        if (fileHandle == NULL) PRINT_ERROR_AND_RETURN("Could not open file")
+
+        /* Read contents into buffer */
+
+        fseek(fileHandle, 0, SEEK_END);
+
+        fileSize = (int)ftell(fileHandle);
+    
+        if (fileSize == 0) PRINT_ERROR_AND_RETURN("File has zero size")
+
+        if (fileSize > 256 * 1024 - 0x4000) PRINT_ERROR_AND_RETURN("File is too big")
+
+        fileData = malloc(fileSize);
+
+        if (fileData == NULL) PRINT_ERROR_AND_RETURN("Could not allocate memory for file data")
+
+        fseek(fileHandle, 0, SEEK_SET);
+
+        fread(fileData, sizeof(char), fileSize, fileHandle);
+
+        fclose(fileHandle);
+
+    }
+
     /* Open and flush specified port */
 
     if (!comOpen(index, 9600)) PRINT_ERROR_AND_RETURN("Could not open port")
 
-    comRead(index, buffer, sizeof(buffer));
+    int count = 0;
+
+    while (comRead(index, buffer, sizeof(buffer)) > 0 && count < MAXIMUM_NUMBER_OF_FLUSH_CYCLES) {
+
+        count += 1;
+
+    }
+
+    if (count == MAXIMUM_NUMBER_OF_FLUSH_CYCLES) PRINT_ERROR_AND_RETURN("Could not flush serial port")
+
+    wait_ms(DELAY_BETWEEN_INSTRUCTIONS_MS);
 
     /* Read serial number */
 
     if (mode == READ_SERIAL_NUMBER) {
 
-        WRITE_WITH_RETURN_ON_ERROR(index, "i", 1, "Could not send 'i' instruction")
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "i", 1, "Could not send 'i' instruction")
 
         wait_ms(DELAY_BETWEEN_INSTRUCTIONS_MS);
         
@@ -443,7 +471,7 @@ int main(int argc, char **argv) {
         
     if (mode == READ_FLASH_CRC) {
         
-        WRITE_WITH_RETURN_ON_ERROR(index, "c", 1, "Could not send 'c' instruction")
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "c", 1, "Could not send 'c' instruction")
         
         wait_ms(DELAY_BETWEEN_INSTRUCTIONS_MS);
         
@@ -461,17 +489,31 @@ int main(int argc, char **argv) {
 
     if (mode == NONDESTRUCTIVE_WRITE) {
 
-        WRITE_WITH_RETURN_ON_ERROR(index, "u", 1, "Could not send 'u' instruction")
+        /* Send non-destructive write instruction */
+
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "u", 1, "Could not send 'u' instruction")
 
     } else {
 
-        WRITE_WITH_RETURN_ON_ERROR(index, "d", 1, "Could not send 'd' instruction")
+        /* Confirm with user */
+
+        char response[5];
+
+        printf("This will overwrite the bootloader. Are you sure? Type 'y' or 'yes' to confirm. : ");
+
+        fgets(response, 5, stdin);
+
+        if (strcmp(response, "y\n") != 0 && strcmp(response, "yes\n") != 0) PRINT_AND_RETURN("No upload performed")
+
+        /* Send destructive write instruction */
+
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "d", 1, "Could not send 'd' instruction")
 
     }
 
     wait_ms(DELAY_BETWEEN_INSTRUCTIONS_MS);
 
-    int size = sendXMODEM(index, file);
+    int size = sendXMODEM(index, fileData, fileSize);
 
     if (size > 0) {
 
@@ -479,11 +521,11 @@ int main(int argc, char **argv) {
 
         if (mode == NONDESTRUCTIVE_WRITE) {
             
-            WRITE_WITH_RETURN_ON_ERROR(index, "c", 1, "Could not send 'c' instruction")
+            WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "c", 1, "Could not send 'c' instruction")
             
         } else {
             
-            WRITE_WITH_RETURN_ON_ERROR(index, "v", 1, "Could not send 'v' instruction")
+            WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "v", 1, "Could not send 'v' instruction")
             
         }
         
@@ -493,12 +535,11 @@ int main(int argc, char **argv) {
         
         printf("Flash CRC: %s\n", flashCRC);
 
-        WRITE_WITH_RETURN_ON_ERROR(index, "b", 1, "Could not send 'b' instruction")
-
-        comClose(index);
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "b", 1, "Could not send 'b' instruction")
 
     }
-        
+
+    comClose(index);
 
     return 0;
 

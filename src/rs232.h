@@ -64,20 +64,20 @@ extern "C" {
      * \brief Enumerate available serial ports (Serial, USB serial, Bluetooth serial)
      * \return number of enumerated ports
      */
-    int comEnumerate();
+    int comEnumerate(void);
     
     /**
      * \fn int comGetNoPorts()
      * \brief Return the number of enumerated ports
      * \return number of enumerated ports
      */
-    int comGetNoPorts();
+    int comGetNoPorts(void);
 
     /**
      * \fn int comTerminate()
      * \brief Release ports and memory resources used by the library
      */    
-    void comTerminate();
+    void comTerminate(void);
 
     /**
      * \fn const char * comGetPortName(int index)
@@ -125,7 +125,7 @@ extern "C" {
      * \fn void comCloseAll()
      * \brief Close all opened ports
      */            
-    void comCloseAll();
+    void comCloseAll(void);
 
 /*****************************************************************************/
     /**

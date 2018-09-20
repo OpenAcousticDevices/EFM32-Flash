@@ -50,6 +50,16 @@
 #include <string.h>
 
 /*****************************************************************************/
+/** Modification to avoid non-standard strdup function */
+char *strduplicate(char *src) {
+    size_t slen = strlen(src);
+    char *str = malloc(slen + 1);
+    if (str == NULL) return NULL;
+    memcpy(str, src, slen + 1);
+    return str;
+}
+
+/*****************************************************************************/
 /** Base name for COM devices */
 #if defined(__APPLE__) && defined(__MACH__)
     static const char * devBases[] = {
@@ -248,7 +258,7 @@ void _AppendDevices(const char * base)
         if (strlen(dp->d_name) >= baseLen) {
             if (memcmp(base, dp->d_name, baseLen) == 0) {
                 COMDevice * com = &comDevices[noDevices ++];
-                com->port = (char *) strdup(dp->d_name);
+                com->port = (char *) strduplicate(dp->d_name);
                 com->handle = -1;
             }
         }
