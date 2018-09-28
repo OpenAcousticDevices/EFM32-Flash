@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CEB7E624214D20FC00016D44 /* rs232.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E623214D20FC00016D44 /* rs232.c */; };
-		CEB7E627214D210E00016D44 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CEB7E626214D210E00016D44 /* main.c */; };
+		CE64A9C8215EA39500ADD16C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CE64A9C6215EA39500ADD16C /* main.c */; };
+		CE64A9CA215EA3A000ADD16C /* rs232.c in Sources */ = {isa = PBXBuildFile; fileRef = CE64A9C9215EA3A000ADD16C /* rs232.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +25,9 @@
 
 /* Begin PBXFileReference section */
 		CE262D3A214D209E00B869FE /* flash */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = flash; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEB7E623214D20FC00016D44 /* rs232.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rs232.c; path = ../../../rs232.c; sourceTree = "<group>"; };
-		CEB7E625214D210400016D44 /* rs232.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rs232.h; path = ../../../../rs232.h; sourceTree = "<group>"; };
-		CEB7E626214D210E00016D44 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../../main.c; sourceTree = "<group>"; };
+		CE64A9C6215EA39500ADD16C /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../main.c; sourceTree = "<group>"; };
+		CE64A9C7215EA39500ADD16C /* rs232.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rs232.h; path = ../../../rs232.h; sourceTree = "<group>"; };
+		CE64A9C9215EA3A000ADD16C /* rs232.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rs232.c; path = ../../rs232.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +60,9 @@
 		CE262D3C214D209E00B869FE /* flash */ = {
 			isa = PBXGroup;
 			children = (
-				CEB7E626214D210E00016D44 /* main.c */,
-				CEB7E625214D210400016D44 /* rs232.h */,
-				CEB7E623214D20FC00016D44 /* rs232.c */,
+				CE64A9C9215EA3A000ADD16C /* rs232.c */,
+				CE64A9C6215EA39500ADD16C /* main.c */,
+				CE64A9C7215EA39500ADD16C /* rs232.h */,
 			);
 			path = flash;
 			sourceTree = "<group>";
@@ -123,8 +123,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEB7E627214D210E00016D44 /* main.c in Sources */,
-				CEB7E624214D20FC00016D44 /* rs232.c in Sources */,
+				CE64A9CA215EA3A000ADD16C /* rs232.c in Sources */,
+				CE64A9C8215EA39500ADD16C /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +245,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y95UCAW2A9;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -254,6 +255,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y95UCAW2A9;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

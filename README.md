@@ -71,12 +71,16 @@ On Linux use gcc to build the binary by running build.sh. This will copy the exe
 > gcc -Wall -std=c99 -I../.. -o flash ../../main.c ../rs232.c
 ```
 
-On Windows use the Microsoft Visual C++ Build Tools on the command line by running build.bat. This will copy the executable to the correct folder. Or compile manually. 
+On Windows use the Microsoft Visual C++ Build Tools on the command line by running build.bat or build32.bat. This will copy the executable to the correct folder. 
+
+Or compile manually. 
 
 ```
 #!basic
 > cl /I .. ../main.c rs232-win.c /link /out:flash.exe
 ```
+
+Note that to build the correct version you should run the command in the correct environment. Use the 'x64 Native Tools Command Prompt' to build the 64-bit binary on a 64-bit machine, and the 'x64_x86 Cross Tools Command Prompt' to build the 32-bit binary on a 64-bit machine.
 
 ## More Information ##
 
