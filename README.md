@@ -7,7 +7,6 @@ This is a command line tool for accessing flashing EFM32 devices using the facto
 To list the available ports use:
 
 ```
-#!basic
 > ./flash 
 /dev/tty.usbmodem1421
 ```
@@ -15,7 +14,6 @@ To list the available ports use:
 To access the serial number of the connected device:
 
 ```
-#!basic
 > ./flash -i /dev/tty.usbmodem1421
 Serial Number: 24410E05588EF20C
 ```
@@ -23,7 +21,6 @@ Serial Number: 24410E05588EF20C
 To check the CRC of the current flash. 
 
 ```
-#!basic
 > ./flash -c /dev/tty.usbmodem1421
 Flash CRC: 40AA
 ```
@@ -31,7 +28,6 @@ Flash CRC: 40AA
 To upload a binary file to the device. 
 
 ```
-#!basic
 > ./flash -u /dev/tty.usbmodem1421 AudioMoth1.0.0.bin
 Programmed: 41412 bytes
 Flash CRC: 4393
@@ -56,7 +52,6 @@ Windows 10 will automatically install the necessary USB CDC serial port driver. 
 Most Linux distributions should already include the necessary USB CDC serial port driver. You might also need to change the permissions of the port before you can access it.
 
 ```
-#!basic
 > sudo chmod 666 /dev/ttyACM0
 ```
 
@@ -67,7 +62,6 @@ On macOS use the Xcode project to build the binary. After archiving, the resulti
 On Linux use gcc to build the binary by running build.sh. This will copy the executable to the correct folder. Or compile manually. 
 
 ```
-#!basic
 > gcc -Wall -std=c99 -I../.. -o flash ../../main.c ../rs232.c
 ```
 
@@ -76,7 +70,6 @@ On Windows use the Microsoft Visual C++ Build Tools on the command line by runni
 Or compile manually. 
 
 ```
-#!basic
 > cl /I .. ../main.c rs232-win.c /link /out:flash.exe
 ```
 
