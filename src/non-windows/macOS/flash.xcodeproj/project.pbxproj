@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE64A9C8215EA39500ADD16C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CE64A9C6215EA39500ADD16C /* main.c */; };
-		CE64A9CA215EA3A000ADD16C /* rs232.c in Sources */ = {isa = PBXBuildFile; fileRef = CE64A9C9215EA3A000ADD16C /* rs232.c */; };
+		CE187AA6224A108200710130 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = CE187AA5224A108200710130 /* main.c */; };
+		CE187AA8224A108C00710130 /* rs232.c in Sources */ = {isa = PBXBuildFile; fileRef = CE187AA7224A108C00710130 /* rs232.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CE262D38214D209E00B869FE /* CopyFiles */ = {
+		CE6B96EE224A0F94002D552F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -24,14 +24,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CE262D3A214D209E00B869FE /* flash */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = flash; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE64A9C6215EA39500ADD16C /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../main.c; sourceTree = "<group>"; };
-		CE64A9C7215EA39500ADD16C /* rs232.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rs232.h; path = ../../../rs232.h; sourceTree = "<group>"; };
-		CE64A9C9215EA3A000ADD16C /* rs232.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rs232.c; path = ../../rs232.c; sourceTree = "<group>"; };
+		CE187AA4224A107C00710130 /* rs232.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rs232.h; path = ../../../rs232.h; sourceTree = "<group>"; };
+		CE187AA5224A108200710130 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../../main.c; sourceTree = "<group>"; };
+		CE187AA7224A108C00710130 /* rs232.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rs232.c; path = ../../rs232.c; sourceTree = "<group>"; };
+		CE6B96F0224A0F94002D552F /* flash */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = flash; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CE262D37214D209E00B869FE /* Frameworks */ = {
+		CE6B96ED224A0F94002D552F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,28 +41,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CE262D31214D209E00B869FE = {
+		CE6B96E7224A0F94002D552F = {
 			isa = PBXGroup;
 			children = (
-				CE262D3C214D209E00B869FE /* flash */,
-				CE262D3B214D209E00B869FE /* Products */,
+				CE6B96F2224A0F94002D552F /* flash */,
+				CE6B96F1224A0F94002D552F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		CE262D3B214D209E00B869FE /* Products */ = {
+		CE6B96F1224A0F94002D552F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE262D3A214D209E00B869FE /* flash */,
+				CE6B96F0224A0F94002D552F /* flash */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CE262D3C214D209E00B869FE /* flash */ = {
+		CE6B96F2224A0F94002D552F /* flash */ = {
 			isa = PBXGroup;
 			children = (
-				CE64A9C9215EA3A000ADD16C /* rs232.c */,
-				CE64A9C6215EA39500ADD16C /* main.c */,
-				CE64A9C7215EA39500ADD16C /* rs232.h */,
+				CE187AA7224A108C00710130 /* rs232.c */,
+				CE187AA5224A108200710130 /* main.c */,
+				CE187AA4224A107C00710130 /* rs232.h */,
 			);
 			path = flash;
 			sourceTree = "<group>";
@@ -70,13 +70,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CE262D39214D209E00B869FE /* flash */ = {
+		CE6B96EF224A0F94002D552F /* flash */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CE262D41214D209E00B869FE /* Build configuration list for PBXNativeTarget "flash" */;
+			buildConfigurationList = CE6B96F7224A0F94002D552F /* Build configuration list for PBXNativeTarget "flash" */;
 			buildPhases = (
-				CE262D36214D209E00B869FE /* Sources */,
-				CE262D37214D209E00B869FE /* Frameworks */,
-				CE262D38214D209E00B869FE /* CopyFiles */,
+				CE6B96EC224A0F94002D552F /* Sources */,
+				CE6B96ED224A0F94002D552F /* Frameworks */,
+				CE6B96EE224A0F94002D552F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -84,54 +84,54 @@
 			);
 			name = flash;
 			productName = flash;
-			productReference = CE262D3A214D209E00B869FE /* flash */;
+			productReference = CE6B96F0224A0F94002D552F /* flash */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		CE262D32214D209E00B869FE /* Project object */ = {
+		CE6B96E8224A0F94002D552F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "University of Oxford";
 				TargetAttributes = {
-					CE262D39214D209E00B869FE = {
-						CreatedOnToolsVersion = 9.4.1;
+					CE6B96EF224A0F94002D552F = {
+						CreatedOnToolsVersion = 10.2;
 					};
 				};
 			};
-			buildConfigurationList = CE262D35214D209E00B869FE /* Build configuration list for PBXProject "flash" */;
+			buildConfigurationList = CE6B96EB224A0F94002D552F /* Build configuration list for PBXProject "flash" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = CE262D31214D209E00B869FE;
-			productRefGroup = CE262D3B214D209E00B869FE /* Products */;
+			mainGroup = CE6B96E7224A0F94002D552F;
+			productRefGroup = CE6B96F1224A0F94002D552F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CE262D39214D209E00B869FE /* flash */,
+				CE6B96EF224A0F94002D552F /* flash */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CE262D36214D209E00B869FE /* Sources */ = {
+		CE6B96EC224A0F94002D552F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE64A9CA215EA3A000ADD16C /* rs232.c in Sources */,
-				CE64A9C8215EA39500ADD16C /* main.c in Sources */,
+				CE187AA8224A108C00710130 /* rs232.c in Sources */,
+				CE187AA6224A108200710130 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		CE262D3F214D209E00B869FE /* Debug */ = {
+		CE6B96F5224A0F94002D552F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -182,14 +182,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		CE262D40214D209E00B869FE /* Release */ = {
+		CE6B96F6224A0F94002D552F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -234,28 +235,29 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		CE262D42214D209E00B869FE /* Debug */ = {
+		CE6B96F8224A0F94002D552F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y95UCAW2A9;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		CE262D43214D209E00B869FE /* Release */ = {
+		CE6B96F9224A0F94002D552F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y95UCAW2A9;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -263,25 +265,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CE262D35214D209E00B869FE /* Build configuration list for PBXProject "flash" */ = {
+		CE6B96EB224A0F94002D552F /* Build configuration list for PBXProject "flash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CE262D3F214D209E00B869FE /* Debug */,
-				CE262D40214D209E00B869FE /* Release */,
+				CE6B96F5224A0F94002D552F /* Debug */,
+				CE6B96F6224A0F94002D552F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CE262D41214D209E00B869FE /* Build configuration list for PBXNativeTarget "flash" */ = {
+		CE6B96F7224A0F94002D552F /* Build configuration list for PBXNativeTarget "flash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CE262D42214D209E00B869FE /* Debug */,
-				CE262D43214D209E00B869FE /* Release */,
+				CE6B96F8224A0F94002D552F /* Debug */,
+				CE6B96F9224A0F94002D552F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = CE262D32214D209E00B869FE /* Project object */;
+	rootObject = CE6B96E8224A0F94002D552F /* Project object */;
 }
