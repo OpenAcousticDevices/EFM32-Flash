@@ -419,8 +419,10 @@ int main(int argc, char **argv) {
     
         if (fileSize == 0) PRINT_ERROR_AND_RETURN("File has zero size")
 
-        if (fileSize > 256 * 1024 - 0x4000) PRINT_ERROR_AND_RETURN("File is too big")
+        if (mode == NONDESTRUCTIVE_WRITE && fileSize > 256 * 1024 - 0x4000) PRINT_ERROR_AND_RETURN("File is too big")
 
+        if (mode == DESTRUCTIVE_WRITE && fileSize > 256 * 1024) PRINT_ERROR_AND_RETURN("File is too big")
+        
         fileData = malloc(fileSize);
 
         if (fileData == NULL) PRINT_ERROR_AND_RETURN("Could not allocate memory for file data")
