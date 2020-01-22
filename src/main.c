@@ -537,8 +537,16 @@ int main(int argc, char **argv) {
         
         printf("Flash CRC: %s\n", flashCRC);
 
-        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "b", 1, "Could not send 'b' instruction")
-
+        if (mode == NONDESTRUCTIVE_WRITE) {
+            
+            WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "b", 1, "Could not send 'b' instruction")
+            
+        } else {
+            
+            WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "r", 1, "Could not send 'r' instruction")
+            
+        }
+        
     }
 
     comClose(index);
