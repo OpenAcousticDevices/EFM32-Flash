@@ -50,17 +50,11 @@ Note that the default CRC is that of the application only. When a destructive wr
 
 From Node.js or Python the command line tool can be called as a child process.
 
-### macOS ###
-
-macOS already includes the necessary USB CDC serial port driver.
-
 ### Windows ###
 
-On Windows 7 you will need to manually install the driver using EFM32-Cdc.inf file included in this repository. Later versions of Windows will automatically use an appropriate USB CDC serial port driver. 
+On Windows 7, you must manually install the driver using EFM32-Cdc.inf file included in this repository. Later versions of Windows will automatically use an appropriate USB CDC serial port driver. 
 
 ### Linux ###
-
-Linux distributions already include the necessary USB CDC serial port driver. On some distributions you may need to change the permissions of the port before you can access it.
 
 By default, Linux prevents writing to certain types of USB devices such as the AudioMoth. To use this application you must first navigate to `/lib/udev/rules.d/` and create a new file (or edit the existing file) with the name `99-audiomoth.rules`:
 
@@ -81,7 +75,7 @@ On certain Linux distributions, you may also have to manually set the permission
 > sudo usermod -a -G dialout $(whoami)
 ```
 
-Finally, you may still have to manually set the permissions for ports to allow the app communicate with your AudioMoth. If you experience connection issues when trying to access a specific port (e.g. `/dev/ttyACM0`), try the following command:
+Finally, you may still have to manually set the permissions for ports to allow the app to communicate with your AudioMoth. If you experience connection issues when trying to access a specific port (e.g. `/dev/ttyACM0`), try the following command:
 
 ```
 > sudo chmod 666 /dev/ttyACM0
@@ -101,7 +95,7 @@ AudioMoth-Live can be built on Windows using the Microsoft Visual C++ Build Tool
 cl /I.\src\ .\src\main.c .\src\windows/rs232.c /link /out:flash.exe
 ```
 
-AudioMoth-Live can be built on Linux and Raspberry Pi using the `gcc`.
+AudioMoth-Live can be built on Linux and Raspberry Pi using `gcc`.
 
 ```
 > gcc -Wall -std=c99 -I./src/ ./src/main.c ./src/linux/rs232.c -o flash 
