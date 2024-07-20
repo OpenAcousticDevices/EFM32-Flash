@@ -91,7 +91,7 @@ AudioMoth-Live can be built on Windows using the Microsoft Visual C++ Build Tool
 cl /I.\src\ .\src\main.c .\src\windows/rs232.c /link /out:flash.exe
 ```
 
-AudioMoth-Live can be built on Linux and Raspberry Pi using `gcc`.
+AudioMoth-Live can be built on Linux using `gcc`.
 
 ```
 > gcc -Wall -std=c99 -I./src/ ./src/main.c ./src/linux/rs232.c -o flash 
