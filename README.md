@@ -79,19 +79,19 @@ Finally, you may still have to manually set the permissions for ports to allow t
 
 ## Building from source ##
 
-AudioMoth-Live can be built on macOS using the Xcode Command Line Tools.
+Flash can be built on macOS using the Xcode Command Line Tools.
 
 ```
 > clang -I./src/ ./src/main.c ./src/macOS/rs232.c -o flash   
 ```
 
-AudioMoth-Live can be built on Windows using the Microsoft Visual C++ Build Tools. Note that to build the correct version you should run the command in the correct environment. Use the 'x64 Native Tools Command Prompt' to build the 64-bit binary on a 64-bit machine, and the 'x64_x86 Cross Tools Command Prompt' to build the 32-bit binary on a 64-bit machine.
+Flash can be built on Windows using the Microsoft Visual C++ Build Tools. Note that to build the correct version you should run the command in the correct environment. Use the 'x64 Native Tools Command Prompt' to build the 64-bit binary on a 64-bit machine, and the 'x64_x86 Cross Tools Command Prompt' to build the 32-bit binary on a 64-bit machine.
 
 ```
 cl /I.\src\ .\src\main.c .\src\windows/rs232.c /link /out:flash.exe
 ```
 
-AudioMoth-Live can be built on Linux using `gcc`.
+Flash can be built on Linux using `gcc`.
 
 ```
 > gcc -Wall -std=c99 -I./src/ ./src/main.c ./src/linux/rs232.c -o flash 
