@@ -50,10 +50,6 @@ Note that the default CRC is that of the application only. When a destructive wr
 
 From Node.js or Python the command line tool can be called as a child process.
 
-### Windows ###
-
-On Windows 7, you must manually install the driver using EFM32-Cdc.inf file included in this repository. Later versions of Windows will automatically use an appropriate USB CDC serial port driver. 
-
 ### Linux ###
 
 By default, Linux prevents writing to certain types of USB devices such as the AudioMoth. To use this application you must first navigate to `/lib/udev/rules.d/` and create a new file (or edit the existing file) with the name `99-audiomoth.rules`:
