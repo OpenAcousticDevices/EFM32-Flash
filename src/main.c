@@ -286,7 +286,7 @@ char flashCRC[FLASH_CRC_LENGTH + 1];
 
 char serialNumber[SERIAL_NUMBER_LENGTH + 1];
 
-typedef enum {LIST_PORTS, READ_SERIAL_NUMBER, READ_FLASH_CRC, NONDESTRUCTIVE_WRITE, DESTRUCTIVE_WRITE} flashmode_t;
+typedef enum {LIST_PORTS, READ_SERIAL_NUMBER, READ_FLASH_CRC, RESTART, NONDESTRUCTIVE_WRITE, DESTRUCTIVE_WRITE} flashmode_t;
 
 int main(int argc, char **argv) {
 
@@ -313,6 +313,12 @@ int main(int argc, char **argv) {
             
         port = argv[2];
             
+    } else if (argc == 3 && strcmp(argv[1], "-r") == 0) {
+    
+        mode = RESTART;
+    
+        port = argv[2];
+
     } else if (argc == 4 && strcmp(argv[1], "-u") == 0) {
 
         mode = NONDESTRUCTIVE_WRITE;
@@ -331,7 +337,7 @@ int main(int argc, char **argv) {
 
     } else {
 
-        PRINT_ERROR_AND_RETURN("Incorrect arguments.\nflash               // List serial ports\nflash -i port       // Show AudioMoth serial number\nflash -c port       // Show current firmware CRC value\nflash -u port file  // Upload new firmware")
+        PRINT_ERROR_AND_RETURN("Incorrect arguments.\nflash               // List serial ports\nflash -i port       // Show device serial number\nflash -c port       // Show current firmware CRC value\nflash -r port       // Restart the device\nflash -u port file  // Upload new firmware")
 
     }
 
@@ -418,11 +424,9 @@ int main(int argc, char **argv) {
         fileSize = (int)ftell(fileHandle);
     
         if (fileSize == 0) PRINT_ERROR_AND_RETURN("File has zero size")
-								   
-	    if (mode == NONDESTRUCTIVE_WRITE && fileSize > 256 * 1024 - 0x4000) PRINT_ERROR_AND_RETURN("File is too big")
 
-        if (mode == DESTRUCTIVE_WRITE && fileSize > 256 * 1024) PRINT_ERROR_AND_RETURN("File is too big")
-        
+        if (fileSize > 256 * 1024 - 0x4000) PRINT_ERROR_AND_RETURN("File is too big")
+
         fileData = malloc(fileSize);
 
         if (fileData == NULL) PRINT_ERROR_AND_RETURN("Could not allocate memory for file data")
@@ -487,6 +491,16 @@ int main(int argc, char **argv) {
         
     }
 
+    if (mode == RESTART) {
+
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "r", 1, "Could not send 'r' instruction")
+        
+        comClose(index);
+        
+        return 0;
+
+    }
+
     /* Send the file to the device */
 
     if (mode == NONDESTRUCTIVE_WRITE) {
@@ -537,16 +551,8 @@ int main(int argc, char **argv) {
         
         printf("Flash CRC: %s\n", flashCRC);
 
-        if (mode == NONDESTRUCTIVE_WRITE) {
-            
-            WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "b", 1, "Could not send 'b' instruction")
-            
-        } else {
-            
-            WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "r", 1, "Could not send 'r' instruction")
-            
-        }
-        
+        WRITE_WITH_CLOSE_AND_RETURN_ON_ERROR(index, "r", 1, "Could not send 'r' instruction")
+
     }
 
     comClose(index);
