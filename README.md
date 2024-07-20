@@ -113,6 +113,6 @@ On macOS, Linux and Raspberry Pi you can copy the resulting executable to `/usr/
 
 Pre-built binaries are also available in the repository.
 
-## More Information ##
+## More information ##
 
 The Silicon Labs USB bootloader is described in an Application Note [here](https://www.silabs.com/documents/public/application-notes/an0042-efm32-usb-uart-bootloader.pdf).
