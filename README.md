@@ -97,7 +97,7 @@ AudioMoth-Live can be built on Linux using `gcc`.
 > gcc -Wall -std=c99 -I./src/ ./src/main.c ./src/linux/rs232.c -o flash 
 ```
 
-On macOS, Linux and Raspberry Pi you can copy the resulting executable to `/usr/local/bin/` so it is immediately accessible from the terminal. On Windows copy the executable to a permanent location and add this location to the `PATH` variable.
+On macOS and Linux you can copy the resulting executable to `/usr/local/bin/` so it is immediately accessible from the terminal. On Windows copy the executable to a permanent location and add this location to the `PATH` variable.
 
 ## Pre-built binaries ##
 
